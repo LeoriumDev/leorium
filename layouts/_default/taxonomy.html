@@ -1,0 +1,46 @@
+{{ define "main" }}
+<div class="taxonomy-single-page">
+    <header class="list-header">
+        <h1 class="list-title">{{ .Title }}</h1>
+        <p class="list-description">{{ .Params.count | default (len .Pages) }} post{{ if ne (len .Pages) 1 }}s{{ end }} tagged with "{{ .Title }}"</p>
+    </header>
+    
+    <div class="post-list">
+        {{ range .Pages }}
+        <article class="post-item">
+            <header class="post-item-header">
+                <h2 class="post-item-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                <div class="post-item-meta">
+                    <time>{{ .Date.Format $.Site.Params.dateFormat }}</time>
+                    {{ if .Site.Params.showReadingTime }}
+                    <span class="reading-time">{{ .ReadingTime }} min read</span>
+                    {{ end }}
+                </div>
+                {{ with .Params.tags }}
+                <div class="post-item-tags">
+                    {{ range . }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </header>
+            <div class="post-item-summary">
+                {{ if .Description }}
+                    {{ .Description }}
+                {{ else }}
+                    {{ $content := .Content | plainify }}
+                    {{ $words := split $content " " }}
+                    {{ $summary := delimit (first 25 $words) " " }}
+                    {{ $summary | safeHTML }}{{ if gt (len $words) 25 }}...{{ end }}
+                {{ end }}
+            </div>
+            <footer class="post-item-footer">
+                <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+            </footer>
+        </article>
+        {{ end }}
+    </div>
+    
+    {{ template "_internal/pagination.html" . }}
+</div>
+{{ end }}

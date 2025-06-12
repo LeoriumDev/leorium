@@ -1,0 +1,117 @@
+{{ define "main" }}
+<div class="taxonomy-page">
+    <header class="list-header">
+        <h1 class="list-title">{{ .Title }}</h1>
+        <p class="list-description">Browse posts by {{ lower .Title }}</p>
+    </header>
+    
+    <div class="taxonomy-list">
+        {{ $data := .Data }}
+        {{ range $data.Terms.ByCount }}
+        <div class="taxonomy-item">
+            <h3 class="taxonomy-title">
+                <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                <span class="taxonomy-count">({{ .Count }})</span>
+            </h3>
+            <div class="taxonomy-posts">
+                {{ range first 3 .Pages }}
+                <div class="taxonomy-post">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    <time>{{ .Date.Format $.Site.Params.dateFormat }}</time>
+                </div>
+                {{ end }}
+                {{ if gt (len .Pages) 3 }}
+                <div class="taxonomy-more">
+                    <a href="{{ .Page.Permalink }}">View all {{ .Count }} posts →</a>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+.taxonomy-list {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.taxonomy-item {
+    background-color: var(--light-background);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.taxonomy-title {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.taxonomy-title a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.taxonomy-title a:hover {
+    color: var(--primary-color);
+}
+
+.taxonomy-count {
+    color: var(--light-text-color);
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.taxonomy-posts {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.taxonomy-post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.taxonomy-post:last-child {
+    border-bottom: none;
+}
+
+.taxonomy-post a {
+    color: var(--text-color);
+    text-decoration: none;
+    flex: 1;
+}
+
+.taxonomy-post a:hover {
+    color: var(--primary-color);
+}
+
+.taxonomy-post time {
+    color: var(--light-text-color);
+    font-size: 0.85rem;
+    margin-left: 1rem;
+}
+
+.taxonomy-more {
+    margin-top: 0.5rem;
+}
+
+.taxonomy-more a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.taxonomy-more a:hover {
+    text-decoration: underline;
+}
+</style>
+{{ end }}

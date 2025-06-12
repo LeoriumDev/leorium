@@ -1,0 +1,59 @@
+{{ define "main" }}
+<div class="error-page">
+    <h1>404</h1>
+    <h2>Page Not Found</h2>
+    <p>The page you're looking for doesn't exist or has been moved.</p>
+    <p>Here are some helpful links instead:</p>
+    <ul>
+        <li><a href="/">Home Page</a></li>
+        <li><a href="/posts/">All Posts</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+    </ul>
+</div>
+
+<style>
+.error-page {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.error-page h1 {
+    font-size: 6rem;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.error-page h2 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.error-page p {
+    margin-bottom: 1.5rem;
+}
+
+.error-page ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.error-page ul li a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.error-page ul li a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+</style>
+{{ end }}

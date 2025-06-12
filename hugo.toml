@@ -1,0 +1,45 @@
+baseURL = 'https://leorium.com/'
+languageCode = 'en-us'
+title = 'leorium.com'
+enableEmoji = true
+summaryLength = 70
+# Use the custom theme
+theme = "bloat-free-theme"
+
+[pagination]
+  pagerSize = 5
+
+[params]
+  description = "Hi. Welcome to my website!"
+  author = "Leorium"
+  mainSections = ["posts"]
+  youtubeChannel = "@leorium"
+  githubHandle = "LeoriumDev"
+  dateFormat = "Jan 2, 2006"
+  showReadingTime = true
+  showPostNavigation = true
+  
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 3
+  [[menu.main]]
+    identifier = "contact"
+    name = "Contact"
+    url = "/contact/"
+    weight = 4
+
+[taxonomies]
+  tag = "tags"

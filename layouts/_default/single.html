@@ -1,0 +1,43 @@
+{{ define "main" }}
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <div class="post-meta">
+            <time>{{ .Date.Format .Site.Params.dateFormat }}</time>
+            {{ if .Params.author }}
+            <span class="post-author">by {{ .Params.author }}</span>
+            {{ end }}
+            {{ if .Site.Params.showReadingTime }}
+            <span class="reading-time">{{ .ReadingTime }} min read</span>
+            {{ end }}
+        </div>
+    </header>
+    {{ with .Params.tags }}
+    <div class="post-tags">
+        {{ range . }}
+        <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+        {{ end }}
+    </div>
+    {{ end }}
+    <div class="post-content">
+        {{ $content := .Content }}
+        {{ $content := replaceRE "^\\s*#\\s+.+\\n" "" $content }}
+        {{ $content | safeHTML }}
+    </div>
+    {{ $showNavigation := .Params.showNavigation | default .Site.Params.showPostNavigation }}
+    {{ if $showNavigation }}
+    <footer class="post-footer">
+        {{ if .NextInSection }}
+        <div class="post-nav-next">
+            <strong>Next:</strong> <a href="{{ .NextInSection.Permalink }}">{{ .NextInSection.Title }}</a>
+        </div>
+        {{ end }}
+        {{ if .PrevInSection }}
+        <div class="post-nav-prev">
+            <strong>Previous:</strong> <a href="{{ .PrevInSection.Permalink }}">{{ .PrevInSection.Title }}</a>
+        </div>
+        {{ end }}
+    </footer>
+    {{ end }}
+</article>
+{{ end }}

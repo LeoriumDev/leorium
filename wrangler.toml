@@ -1,0 +1,10 @@
+name = "bloat-free-worker"
+main = "worker.js"
+compatibility_date = "2025-06-04"
+
+[site]
+bucket = "./public"
+
+[build]
+[build.upload]
+external = ["hono"]

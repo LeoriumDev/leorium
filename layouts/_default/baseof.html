@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    {{ if .IsPage }}
+    <meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{ end }}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3K71MQ61XT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3K71MQ61XT');
+  </script>
+</head>
+<body{{ if .IsPage }} class="single"{{ end }}>
+    <div class="container">
+        {{ partial "navbar" . }}
+        <main class="content">
+            {{ block "main" . }}{{ end }}
+        </main>
+        {{ partial "footer" . }}
+    </div>
+    <script src="/js/main.js"></script>
+    {{- if and (.Site.Params.googleAnalyticsID) (.Site.Params.enableGoogleAnalytics) -}}
+    <script src="/js/analytics.js"></script>
+    {{- end -}}
+</body>
+</html>

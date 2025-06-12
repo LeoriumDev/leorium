@@ -1,0 +1,271 @@
+{{ define "main" }}
+<div class="home-page">
+    <header class="home-header">
+        <h1 class="home-title">{{ .Site.Title }}</h1>
+        <p class="home-description">{{ .Site.Params.description }}</p>
+    </header>
+    
+    <div class="featured-posts">
+        <h2>Featured Posts</h2>
+        <div class="post-list">
+            {{ range first 3 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+            <article class="post-item">
+                <header class="post-item-header">
+                    <h3 class="post-item-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                    <div class="post-item-meta">
+                        <time>{{ .Date.Format $.Site.Params.dateFormat }}</time>
+                        {{ if .Site.Params.showReadingTime }}
+                        <span class="reading-time">{{ .ReadingTime }} min read</span>
+                        {{ end }}
+                    </div>
+                    {{ with .Params.tags }}
+                    <div class="post-item-tags">
+                        {{ range . }}
+                        <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </header>
+                <div class="post-item-summary">
+                    {{ if .Description }}
+                        {{ .Description }}
+                    {{ else }}
+                        {{ $content := .Content | plainify }}
+                        {{ $words := split $content " " }}
+                        {{ $summary := delimit (first 25 $words) " " }}
+                        {{ $summary | safeHTML }}{{ if gt (len $words) 25 }}...{{ end }}
+                    {{ end }}
+                </div>
+                <footer class="post-item-footer">
+                    <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+                </footer>
+            </article>
+            {{ end }}
+        </div>
+    </div>
+    
+    <div class="recent-posts">
+        <h2>Recent Posts</h2>
+        <div class="post-list">
+            {{ $recentPosts := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+            {{ if gt (len $recentPosts) 3 }}
+                {{ range first 5 (after 3 $recentPosts) }}
+                <article class="post-item">
+                    <header class="post-item-header">
+                        <h3 class="post-item-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                        <div class="post-item-meta">
+                            <time>{{ .Date.Format $.Site.Params.dateFormat }}</time>
+                            {{ if .Site.Params.showReadingTime }}
+                            <span class="reading-time">{{ .ReadingTime }} min read</span>
+                            {{ end }}
+                        </div>
+                        {{ with .Params.tags }}
+                        <div class="post-item-tags">
+                            {{ range . }}
+                            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </header>
+                <div class="post-item-summary">
+                    {{ if .Description }}
+                        {{ .Description }}
+                    {{ else }}
+                        {{ $content := .Content | plainify }}
+                        {{ $words := split $content " " }}
+                        {{ $summary := delimit (first 25 $words) " " }}
+                        {{ $summary | safeHTML }}{{ if gt (len $words) 25 }}...{{ end }}
+                    {{ end }}
+                </div>
+                <footer class="post-item-footer">
+                    <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+                </footer>
+            </article>
+            {{ end }}
+            {{ else }}
+            <p class="no-posts-message">No more posts to show. Check back soon!</p>
+            {{ end }}
+        </div>
+        <div class="see-all-posts">
+            <a href="/posts/" class="btn">See All Posts →</a>
+        </div>
+    </div>
+    
+    <div class="tags-section">
+        <h2>Browse by Tags</h2>
+        <div class="tags-cloud">
+            {{ range first 10 .Site.Taxonomies.tags.ByCount }}
+            <a href="{{ "/tags/" | relLangURL }}{{ .Page.Title | urlize }}" class="tag-cloud-item" data-count="{{ .Count }}">
+                {{ .Page.Title }} ({{ .Count }})
+            </a>
+            {{ end }}
+        </div>
+        <div class="see-all-tags">
+            <a href="/tags/" class="btn">See All Tags →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.home-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.home-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.home-description {
+    font-size: 1.2rem;
+    color: var(--light-text-color);
+}
+
+.featured-posts, 
+.recent-posts,
+.tags-section {
+    margin-bottom: 4rem;
+}
+
+.featured-posts h2, 
+.recent-posts h2,
+.tags-section h2 {
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.featured-posts h2:after, 
+.recent-posts h2:after,
+.tags-section h2:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.post-card {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.post-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-card-meta {
+    color: var(--lightest-text-color);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.post-card-summary {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.post-card-footer {
+    margin-top: auto;
+}
+
+.see-all-posts {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.see-all-tags {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 3px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.tag-cloud-item {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--light-background);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.tag-cloud-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-cloud-item[data-count="3"],
+.tag-cloud-item[data-count="4"],
+.tag-cloud-item[data-count="5"] {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.tag-cloud-item[data-count="6"],
+.tag-cloud-item[data-count="7"],
+.tag-cloud-item[data-count="8"] {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.tag-cloud-item[data-count="9"],
+.tag-cloud-item[data-count="10"] {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .home-title {
+        font-size: 2rem;
+    }
+}
+</style>
+{{ end }}

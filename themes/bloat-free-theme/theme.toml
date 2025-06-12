@@ -1,0 +1,11 @@
+name = "Bloat Free Theme"
+license = "MIT"
+licenselink = "https://github.com/LeoriumDev/bloat-free/blob/main/LICENSE"
+description = "A minimal, bloat-free Hugo theme"
+
+tags = ["blog", "minimal", "responsive", "clean"]
+features = ["blog", "responsive"]
+
+[author]
+  name = "Leorium"
+  homepage = "https://github.com/LeoriumDev"
