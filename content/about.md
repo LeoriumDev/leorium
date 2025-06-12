@@ -5,9 +5,9 @@ draft: false
 showNavigation: false
 ---
 
-# About Bloat-Free
+# About Leorium
 
-Welcome to Bloat-Free, a minimalist blog focused on delivering content without unnecessary bloat. This site is designed to be fast, accessible, and easy to read.
+Welcome to my website :).
 
 ## Contact
 
