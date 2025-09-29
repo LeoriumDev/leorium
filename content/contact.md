@@ -9,7 +9,9 @@ showNavigation: false
 
 I'd love to hear from you! Whether you have a question, feedback, or just want to say hello, feel free to reach out.
 
-## Contact Methods
+## Connections
 
-- **YouTube**: [@leorium](https://youtube.com/@leorium)
+- **Email**: [contact@leorium.com](mailto:contact@leorium.com)
 - **GitHub**: [LeoriumDev](https://github.com/LeoriumDev)
+- **YouTube**: [@leorium](https://youtube.com/@leorium)
+- **x**: [@leorium](https://x.com/leorium)
