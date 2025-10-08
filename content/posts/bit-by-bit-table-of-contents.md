@@ -1,8 +1,9 @@
 ---
-title: 'Bit by Bit Table of Contents'
+title: 'Bit by Bit: Table of Contents'
 date: '2025-10-07T14:16:36+08:00'
 draft: false
 tags: []
+showNavigation: false
 description: "Brief description of what this post covers - this will be used as the summary"
 ---
 

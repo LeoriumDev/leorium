@@ -5,6 +5,7 @@ draft: false
 tags: []
 categories: []
 author: "Leorium"
+showNavigation: false
 description: "A catalog of my programming tutorial series."
 ---
 
