@@ -1,7 +1,7 @@
 ---
 title: 'How Computers Understand Numbers'
 date: '2025-10-07T15:42:41+08:00'
-draft: true
+draft: false
 series: ["Bit by Bit"]
 tags: ["Bit-By-Bit"]
 description: "This article introduces Binary Number System from the ground up."
