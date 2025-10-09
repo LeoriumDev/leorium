@@ -7,10 +7,254 @@ author: "Leorium"
 ---
 
 > ⚠️ This post is a work in progress. More sections will be added soon. Stay tuned!
-
+{{< center >}}
+`⚠️ Work in progress! More sections coming soon—stay tuned.`
+{{< /center >}}
 ## Introduction
 Almost every programming course introduces floating-point numbers in the first few lectures. However, only a handful actually explain how floating-point _really_ works. In this article, we'll go beyond the surface — diving deep into the details of fixed-point numbers, floating-point representation, the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard, special numbers, rounding errors, and more. By the end, you’ll not just **_use_** floating-point numbers, but truly **_understand_** them.
-
+### Binary Coded Decimal
+Binary Coded Decimal (BCD)
+• The BCD code is the 8,4,2,1 code.
+• BCD is the simplest, most intuitive binary code for decimal
+digits and uses the same powers of 2 as a binary number,
+but only encodes the first ten values from 0 to 9.
+7 5 4 3 0
+• (185)10 = (010111001)2=128+32+16+8+1
+• (185)10 = (0001 1000 0101)BCD
+• Shortcoming
+• advantage
+▫ needs more bits than its equivalent binary number
+▫ Most people use the decimal system
+Decimal Code
+Binary codes for decimal digits (10)
+• BCD (8421) 23 22 21 20
+加權碼: BCD
+非加權碼: excess-3,ASCII,Gray
+• 2421
+• Excess-3
+Excess-3, 是將BCD碼均加上0011. 因為如此
+作,每個數字至少包含一個1,就具有檢誤能力
+• 8, 4, -2, -1
+Introduction
+10 0001 0000 0001 0000 0100 0011 0111 0000
+11 0001 0001 0001 0001 0100 0100 0111 0111
+Binary Coded Decimal (BCD)
+• The BCD code is the 8,4,2,1 code.
+• BCD is the simplest, most intuitive binary code for decimal
+digits and uses the same powers of 2 as a binary number,
+but only encodes the first ten values from 0 to 9.
+7 5 4 3 0
+• (185)10 = (010111001)2=128+32+16+8+1
+• (185)10 = (0001 1000 0101)BCD
+• Shortcoming
+• advantage
+▫ needs more bits than its equivalent binary number
+▫ Most people use the decimal system
+Addition of BCD
+If
+1. sum ≥ 1010 = (10)10
+sum ≥ 10000 = (16)10
+2. then add (0110)2 = 6 to the binary sum
+⇒ a carry + correct digit
+Ex1. Ex2.
+4 0100 1 8 1000
++ 8 +1000 +9 +1001
+12 1100 ≥ 1010 17 1 0001
++ 0110 +6 + 0110
+1 0010 1 0111
+1 2 1 7
+Weighted Codes
+• BCD (8421)
+• 2421
+• 8,4,-2,-1
+(a
+a
+3
+(a
+3
+a
+(a
+3
+a
+a
+2
+a
+1
+a
+2
+1
+a
+a
+2
+a
+1
+0
+)
+BCD
+0
+)
+2421
+0
+)
+84
+-
+2
+1 -
+=
+=
+=
+8a
+3
+2a
+3
+8a
+3
++
++
++
+4a
+2
+4a
+2
+4a
+2
++
++
+−
+2a
+1
+2a
+1
+2a
+1
++
++
+−
+1a
+0
+1a
+0
+1a
+0
+• Example
+▫ 6 = 0*8 + 1*4 + 1*2 + 0 = (0110)BCD
+▫ 6 = 1*2 + 1*4 + 0*2 + 0 = (1100)2421
+ not only one choice, e.g., 6 = (0110)2421 (unused)
+Self-Complementing
+Self-Complementing
+▫ 9’s complement of a decimal number is directly obtained by
+using 1’s complement of the code
+▫ Sum of weight==9, excess-3: 15-(d+3)=(12-d)10, 12-d-3=9-d
+Decimal Code (3)10 (6)10
+Excess-3 0110 1001
+2421 0011 1100
+8,4,-2,-1 0101 1010
+BCD 0011 0110
+(BCD is not a self-complementing code, but it is
+easier to understand)
+Gray Code
+• Advantage
+▫ only one bit in the code group changes
+in going from one number to the next
+Decimal Binary Gray
+7 0111 0100
+8 1000 1100
+Some systems need this kind of feature.
+1
+1
+Binary
+00
+01
+10
+11
+Gray
+00
+1
+01
+2 1 Less bit transition (0➔1 or 1➔0)
+11
+1
+➔power consumption saving
+10
+Three factors for digital systems: cost, speed and power
+area performance
+2進位轉Gray
+Gray轉2進位
+( 1) G B B =  
+( 1) B G B =  
+=
+2 G (10110) (______) ray
+=
+(10110) (______) Gray
+2
+Non-numeric Binary Codes
+• A binary code used to distinguish the seven colors of
+the rainbow
+Color Binary Number
+Red 000
+Orange 001
+Yellow 010
+Green 011
+Blue 100
+Indigo 101
+Violet 110
+ASCII Character Code
+• American Standard Code for Information Interchange
+• A popular code used to represent information sent as character-
+based data.
+• It uses 7-bits (128 combinations) to represent:
+▫ 94 Graphic printing characters.
+▫ 34 Non-printing characters
+• Some non-printing characters are used for text format (e.g. BS =
+Backspace, CR = carriage return)
+• Other non-printing characters are used for record marking and
+flow control (e.g. STX and ETX start and end text areas).
+Introduction
+30h
+61h
+1. 格式效果字元(format effectors characters) 倒退(BS)、水平定位 (HT)，及歸位(CR)
+2. 訊息分隔字元(information separators characters) 紀錄分隔(RS) 及檔案分隔(FS)
+3. 通訊控制字元(communication-control characters) 通訊控制字元STX及ETX
+Error-Detection/Correction Codes
+• Redundancy (e.g. extra information), in the form of extra bits, can
+be incorporated into binary code words to detect and correct errors.
+• A simple form of redundancy is parity, an extra bit appended onto
+the code word to make the number of 1’s odd or even. Parity can
+detect all single-bit errors and some multiple-bit errors.
+• Even parity : the number of 1’s in the code word is even.
+• Odd parity : the number of 1’s in the code word is odd.
+Parity Code Example (error detection)
+Even Parity Message - Parity Odd Parity
+Message - Parity
+000 0 - 000 1 -
+001 1 - 001 0 -
+010 1 - 010 0-
+011 0 - 011 1 -
+100 1- 100 0 -
+101 0 - 101 1 -
+110 0 - 110 1 -
+111 1 - 111 0 -
+• 1-bit parity + 7-bit ASCII
+▫ ‘0’ 1000001 (parity bit = 0 for even parity)
+• When an error occurs … re-transmission
+UNICODE
+• UNICODE extends ASCII to 65,536 universal characters
+codes (UTF-8,UTF-16, BIG-5, Unicode,..)
+▫ For encoding characters in world languages
+▫ Available in many modern applications
+▫ 2 byte (16-bit) code words
+Binary Storage & Registers
+• Binary cell
+▫ 2 stable states, 1-bit information (0 or 1)
+• Register
+▫ a group of binary cells, n-bit , 2n states
+n
+▫ PC and AC in X86 CPU
+▫ to hold the data to be processed or output
+▫ The content may be interpreted differently for different
+type of data (number, character).
+01000001 ➔ 65 or “A” or ….
+(depend on its current situation)
 ## Number Representation
 
 ### Why Bits?

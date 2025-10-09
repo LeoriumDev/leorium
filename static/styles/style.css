@@ -335,6 +335,18 @@ blockquote {
     list-style-type: decimal;
 }
 
+.post-content table {
+  border-collapse: collapse;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post-content th, 
+.post-content td {
+  border: 1px solid rgb(255, 255, 255) !important;
+  padding: 0.5rem;
+}
+
 /* Nested lists */
 .post-content ul ul,
 .post-content ol ul {
